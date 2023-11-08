@@ -9,13 +9,16 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.Message;
 import org.springframework.messaging.support.MessageBuilder;
 import org.springframework.statemachine.StateMachine;
+import org.springframework.statemachine.StateMachineEventResult;
 import org.springframework.statemachine.data.jpa.JpaPersistingStateMachineInterceptor;
 import org.springframework.statemachine.service.StateMachineService;
 import org.springframework.stereotype.Component;
 import org.springframework.util.ObjectUtils;
+import reactor.core.Disposable;
 import reactor.core.publisher.Mono;
 
 import java.text.MessageFormat;
+import java.util.List;
 
 @Component
 @Slf4j
@@ -70,9 +73,11 @@ public class ExampleService {
                 .build());
         stateMachine.sendEvent(v).subscribe();
 
-        log.info("post-state: " + newState);
 
         newState = stateMachine.getState().getId();
+        log.info("post-state: " + newState);
+
+
         log.info("post-state (DB): " + smDb.getState());
 
         return new ResponseData(newState);

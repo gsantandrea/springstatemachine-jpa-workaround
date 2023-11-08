@@ -18,6 +18,10 @@ public class StateMachineModelFactory implements org.springframework.statemachin
         stateDataList.add(stateData1);
 
         StateData stateData2 = new StateData<String, String>("S2", false);
+        stateData2.setEnd(false);
+        stateDataList.add(stateData2);
+
+        StateData stateData3 = new StateData<String, String>("S3", false);
         stateData2.setEnd(true);
         stateDataList.add(stateData2);
 
@@ -29,8 +33,15 @@ public class StateMachineModelFactory implements org.springframework.statemachin
                         "S1",
                         "S2",
                         "event1")
+
         );
 
+        transitionDataList.add(
+                new TransitionData(
+                        "S2",
+                        "S3",
+                        "event2")
+        );
         TransitionsData<String, String> transitions = new TransitionsData<>(transitionDataList);
 
         // Configure State Machine with states and transitions
